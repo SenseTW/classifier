@@ -1,0 +1,35 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+theano = "==0.9.0"
+jupyter = "*"
+scipy = "*"
+numpy = "*"
+sklearn = "*"
+bcolz = "*"
+matplotlib = "*"
+"h5py" = "*"
+pandas = "*"
+pillow = "*"
+keras = "==1.2.2"
+scikit-image = "*"
+tensorflow = "*"
+scikit-learn = "*"
+jieba = "*"
+cython = "*"
+fasttext = "*"
+
+
+[dev-packages]
+
+
+
+[requires]
+
+python_version = "2.7"
