@@ -7,7 +7,6 @@ name = "pypi"
 
 [packages]
 
-theano = "==0.9.0"
 jupyter = "*"
 scipy = "*"
 numpy = "*"
@@ -16,13 +15,13 @@ bcolz = "*"
 matplotlib = "*"
 "h5py" = "*"
 pandas = "*"
-pillow = "*"
-keras = "==1.2.2"
+Pillow = "*"
+Keras = "==1.2.2"
 scikit-image = "*"
 tensorflow = "*"
 scikit-learn = "*"
 jieba = "*"
-cython = "*"
+Cython = "*"
 fasttext = "*"
 
 

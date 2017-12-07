@@ -8,7 +8,7 @@ install:
 	pipenv run pip freeze > requirements.txt
 
 nb:
-	KERAS_BACKEND=theano pipenv run jupyter notebook
+	KERAS_BACKEND=tensorflow pipenv run jupyter notebook
 
 download:
 	mkdir -p nbs/data/join
