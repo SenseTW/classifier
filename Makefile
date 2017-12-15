@@ -1,7 +1,7 @@
 
 .PHONY: all nb install download data download-models
 
-all: init-project install download download-models data nb
+all: init-project install download nb
 
 init-project:
 	pipenv --python $$(cat .python-version)
@@ -13,14 +13,16 @@ install:
 nb:
 	KERAS_BACKEND=tensorflow pipenv run jupyter notebook
 
-download:
+download: download-fasttext
+
+download-join:
 	mkdir -p nbs/data/join
 	cd nbs/data/join; \
 		[ -r 眾開講.json ] || curl -o 眾開講.json https://join.gov.tw/toOpenData/ey/policy; \
 		[ -r 來監督.json ] || curl -o 來監督.json -C - https://join.gov.tw/toOpenData/ey/act; \
 		[ -r 提點子.json ] || curl -o 提點子.json -C - https://join.gov.tw/toOpenData/ey/idea; \
 
-download-models:
+download-fasttext:
 	mkdir -p nbs/data/join/models
 	cd nbs/data/join/models; \
 		[ -r wiki.zh.zip ] \
@@ -32,10 +34,6 @@ data:
 		jq -r 'map(select(.url=="http://join.gov.tw/policies/detail/ce9a5e5f-85ab-4cac-9c8d-cf2e5206ea7c")) | .[0].messages | to_entries | ["id", "createDate", "authorName", "content", "ORID", "comments"] as $$cols | $$cols, map([.key, .value.createDate, .value.authorName, .value.content, "", ""])[] | @csv' 眾開講.json > 立法方式保障.csv; \
 		jq -r 'map(select(.url=="http://join.gov.tw/policies/detail/f69c2804-ba8c-46b0-b24f-6ae5db845789")) | .[0].messages | to_entries | ["id", "createDate", "authorName", "content", "ORID", "comments"] as $$cols | $$cols, map([.key, .value.createDate, .value.authorName, .value.content, "", ""])[] | @csv' 眾開講.json > 同性婚姻法.csv; \
 		jq -r 'map(select(.url=="http://join.gov.tw/policies/detail/411bf889-b52f-417b-8acf-31830d93e9bc")) | .[0].messages | to_entries | ["id", "createDate", "authorName", "content", "ORID", "comments"] as $$cols | $$cols, map([.key, .value.createDate, .value.authorName, .value.content, "", ""])[] | @csv' 眾開講.json > 同性伴侶法.csv; \
-
-test:
-	cd nbs/data/join; \
-		jq -r 'map(select(.url=="http://join.gov.tw/policies/detail/ce9a5e5f-85ab-4cac-9c8d-cf2e5206ea7c")) | .[0].messages[].content' 眾開講.json > test.txt; \
 
 download-good:
 	cd nbs/data/join; \
@@ -49,4 +47,8 @@ download-hotel:
 		wget "https://github.com/nkfly/nlp/raw/master/207884_hotel_training.txt"; \
 		wget "https://github.com/nkfly/nlp/raw/master/211047_hotel_test.txt"
 
-
+download-conversation-sentiment:
+	mkdir -p nbs/data/conversation_sentiment
+	cd nbs/data/conversation_sentiment; \
+		wget "https://github.com/z17176/Chinese_conversation_sentiment/raw/master/sentiment_XS_30k.txt"; \
+		wget "https://raw.githubusercontent.com/z17176/Chinese_conversation_sentiment/master/sentiment_XS_test.txt"
