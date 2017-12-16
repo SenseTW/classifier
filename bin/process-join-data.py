@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, re, pandas as pd
+import os, re, pandas as pd, numpy as np
 
 path = os.path.join("nbs", "data", "join")
 
@@ -17,7 +17,8 @@ def get_sentences(fn):
             if len(sentence) > 0:
                 yield sentence
 
-sentences = [ s for s in get_sentences(os.path.join(path, topic + ".csv")) ]
+sentences = np.array([ s for s in get_sentences(os.path.join(path, topic + ".csv")) ])
+sentences = sentences[np.random.permutation(len(sentences))]
 
 df = pd.DataFrame({
     "sentence": sentences,
