@@ -8,11 +8,11 @@ topic = "立法方式保障"
 
 split_re = re.compile(r"(?:。|？|！|\.|\?|!)+")
 # <https://stackoverflow.com/questions/161738/what-is-the-best-regular-expression-to-check-if-a-string-is-a-valid-url#190405>
-clean_re = re.compile(r"(\b(https?|ftp|file)://)?[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]")
+clean_re = re.compile(r"(?:(\b(https?|ftp|file)://)?[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]|\"|“|”|「|」|'|‘|’|『|』|\(|\)|（|）|【|】|《|》|～|~|\*)")
 
 def get_sentences(fn):
     for message in pd.read_csv(fn, index_col=0).content:
-        message = clean_re.sub("", message)
+        message = clean_re.sub(" ", message)
         for sentence in split_re.split(message):
             if len(sentence) > 0:
                 yield sentence
@@ -25,4 +25,4 @@ df = pd.DataFrame({
     "orid": "",
 })
 
-df.to_csv(os.path.join(path, topic + "-sentences.csv"))
+df.to_csv(os.path.join(path, topic + "-sentences.csv"),
