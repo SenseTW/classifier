@@ -53,3 +53,8 @@ download-conversation-sentiment:
 	cd nbs/data/conversation_sentiment; \
 		wget "https://github.com/z17176/Chinese_conversation_sentiment/raw/master/sentiment_XS_30k.txt"; \
 		wget "https://raw.githubusercontent.com/z17176/Chinese_conversation_sentiment/master/sentiment_XS_test.txt"; \
+
+download-jieba-dict:
+	mkdir -p nbs/data
+	cd nbs/data; \
+		wget "https://github.com/fxsjy/jieba/raw/master/extra_dict/dict.txt.big"
