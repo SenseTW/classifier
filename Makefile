@@ -1,15 +1,20 @@
 
 .PHONY: all nb install download
 
-PYTHON_VERSION=3.5
+PYTHON_VERSION=$$(cat .python-version)
+PYTHON_VERSION=$${PYTHON_VERSION:-3.5}
 
-all: init-project install
+all: init-project install update
 
 init-project:
 	pipenv --python ${PYTHON_VERSION}
 
 install:
 	pipenv install
+	pipenv run pip freeze > requirements.txt
+
+update:
+	pipenv update
 	pipenv run pip freeze > requirements.txt
 
 nb:
